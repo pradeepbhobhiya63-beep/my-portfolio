@@ -91,6 +91,8 @@
   @keyframes smoke{0%{opacity:0; transform:translate(-50%,0) scale(.5)} 14%{opacity:.82} 55%{opacity:.5} 100%{opacity:0; transform:translate(calc(-50% + 20px),-260px) scale(3.2)}}
   @keyframes burnfollow{0%{transform:translate(-50%,0)} 100%{transform:translate(-50%,168px)}}
   @media(prefers-reduced-motion:reduce){ .cig .ember,.smoke span,.smoke{animation:none} }
+  .cig-label{text-align:center; margin-top:14px; font-family:var(--dev); font-weight:800; font-size:clamp(1.9rem,5.5vw,2.9rem); line-height:1.3; color:#7a3a12; background-image:var(--ptext); background-size:110px 110px; -webkit-background-clip:text; background-clip:text}
+  .patok .cig-label{color:transparent; -webkit-text-fill-color:transparent}
   .pill{position:absolute; display:inline-flex; align-items:center; gap:8px; background:#fff; color:var(--ink); font-weight:600; font-size:.82rem; padding:8px 14px; border-radius:100px; box-shadow:0 10px 26px -10px rgba(20,22,30,.3); z-index:3}
   .pill i{width:8px; height:8px; border-radius:50%}
   .pill.p1{top:16%; right:-14px} .pill.p1 i{background:var(--blue)}
@@ -344,6 +346,7 @@
           </g>
         </svg>
       </div>
+      <div class="cig-label">चासले</div>
       <span class="pill p1"><i></i>Web AppSec</span>
       <span class="pill p2"><i></i>Bug Bounty Hunter</span>
       <svg class="mask"><use href="#m-shield"/></svg>
