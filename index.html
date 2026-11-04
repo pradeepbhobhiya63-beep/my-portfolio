@@ -1,238 +1,591 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pradeep | Cyber Security Student & Bug Bounty Hunter</title>
-  <meta name="description" content="Portfolio of Pradeep - B.Tech CSE (Cyber Security) student, bug bounty hunter and developer." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pradeep AppSec Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Baloo+2:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: LIGHT editorial. Hero = clean "Joker/DC" style landing — giant bold name left, portrait right, vertical 01–05 pager, scroll cue. Below: light pastel section cards, each its OWN colour (no repeats), with mehndi (henna) corner ornaments. */
+  :root{
+    --bg:#f3f4f8; --bg-2:#eceef4; --surface:#ffffff; --ink:#14161e; --fg:#1b1e27;
+    --muted:#6a7180; --faint:#9aa2b2; --line:#e4e7ef; --line-2:#d7dbe6;
+    /* light/vivid accents */
+    --rose:#ff6f91; --blue:#4f9dff; --mint:#1fc79a; --lav:#9b7bff; --peach:#ff9a57;
+    --lemon:#e9b60f; --sky:#2cbfe0; --coral:#ff7a6b; --lime:#7fc62f; --grape:#c56bff;
+    --teal:#13bfae; --gold:#d79b14;
+    color-scheme:light;
+    --d:'Archivo',system-ui,sans-serif;
+    --dev:'Baloo 2','Archivo',system-ui,sans-serif;
+    --b:'Manrope',system-ui,sans-serif;
+    --m:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg); color:var(--fg); font-family:var(--b); line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+  #bgp{position:fixed; inset:0; z-index:-3; background-repeat:repeat; background-size:62px 62px; opacity:.34; pointer-events:none}
+  #vortex{position:fixed; inset:0; width:100%; height:100%; z-index:-2; opacity:.75; pointer-events:none}
+  h1,h2,h3,h4{margin:0; line-height:1.08; text-wrap:balance; font-family:var(--d)}
+  p{margin:0}
+  a{color:inherit; text-decoration:none}
+  .mono{font-family:var(--m)}
+  .wrap{max-width:1180px; margin:0 auto;
+    padding-left:max(22px,env(safe-area-inset-left,0px));
+    padding-right:max(22px,env(safe-area-inset-right,0px));}
+
+  /* mehndi */
+  .mh{stroke:currentColor; fill:none; stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round}
+  .mh circle.dot{fill:currentColor; stroke:none}
+  .corner{position:absolute; width:58px; height:58px; opacity:.55; pointer-events:none}
+  .corner.tl{top:10px; left:10px}
+  .corner.tr{top:10px; right:10px; transform:scaleX(-1)}
+  .corner.bl{bottom:10px; left:10px; transform:scaleY(-1)}
+  .corner.br{bottom:10px; right:10px; transform:scale(-1,-1)}
+
+  /* NAV */
+  nav{position:sticky; top:env(safe-area-inset-top,0px); z-index:40; background:color-mix(in srgb,var(--bg) 86%,transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
+  body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:41; background:var(--bg)}
+  .nav-in{display:flex; align-items:center; gap:16px; height:66px}
+  .logo{width:34px; height:34px; border-radius:50%; background:var(--ink); color:#fff; display:grid; place-items:center; font-family:var(--d); font-weight:900; font-size:1rem}
+  .brand{font-family:var(--d); font-weight:800; font-size:1.05rem; letter-spacing:-.3px; color:var(--ink)}
+  .nav-links{display:flex; gap:4px; margin-left:auto; align-items:center; flex-wrap:wrap}
+  .nav-links a{font-family:var(--b); font-weight:600; font-size:.86rem; color:var(--muted); padding:8px 13px; border-radius:9px; transition:color .2s, background .2s; white-space:nowrap}
+  .nav-links a:hover{color:var(--ink); background:var(--surface)}
+  .nav-links a.active{color:var(--ink); background:var(--surface); box-shadow:0 2px 10px rgba(20,22,30,.06)}
+  @media(max-width:760px){ .nav-links a{display:none} .nav-links a.nav-cta{display:block} }
+
+  /* HERO */
+  .hero{position:relative; overflow:hidden}
+  .hero-wm{position:absolute; top:6%; right:-2%; font-family:var(--d); font-weight:900; font-size:22vw; color:rgba(20,22,30,.035); letter-spacing:-.04em; pointer-events:none; user-select:none; z-index:0}
+  .hero-grid{position:relative; z-index:2; display:grid; grid-template-columns:1.08fr .92fr; gap:30px; align-items:center; min-height:min(84vh,740px); padding-block:clamp(30px,5vw,56px)}
+  @media(max-width:860px){ .hero-grid{grid-template-columns:1fr; min-height:0; gap:10px} }
+  .hero h1{font-family:var(--dev); font-size:clamp(3.6rem,14vw,8.5rem); font-weight:800; letter-spacing:0; line-height:1.32; color:#7a3a12; background-image:var(--ptext); background-size:140px 140px; -webkit-background-clip:text; background-clip:text; padding:.12em 0 .14em; overflow:visible}
+  .patok .hero h1{color:transparent; -webkit-text-fill-color:transparent}
+  .sub{font-family:var(--m); font-size:.82rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--faint); margin-top:14px}
+  .mid-dot{display:block; width:9px; height:9px; border-radius:50%; background:var(--rose); margin:30px 0 22px}
+  .power h4{font-family:var(--d); font-weight:800; font-size:1rem; color:var(--ink); margin-bottom:8px}
+  .power p{color:var(--muted); max-width:42ch; font-size:.98rem}
+  .cta-row{display:flex; flex-wrap:wrap; gap:14px; margin-top:30px}
+
+  /* BUTTONS — each different, all light/bright */
+  .btn{position:relative; font-family:var(--d); font-weight:700; font-size:.9rem; padding:13px 22px; cursor:pointer; display:inline-flex; align-items:center; gap:9px; background:transparent; color:var(--ink); transition:transform .16s, box-shadow .28s, background .2s, color .2s}
+  .btn svg.ic{width:18px; height:18px; flex-shrink:0}
+  .btn:hover{transform:translateY(-3px)}
+  .btn-1{color:#fff; background:var(--blue); border-radius:13px; box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 22%,transparent)}
+  .btn-1:hover{box-shadow:0 0 0 5px color-mix(in srgb,var(--blue) 30%,transparent),0 14px 28px -10px var(--blue)}
+  .btn-2{color:var(--rose); border:1.6px dashed var(--rose); border-radius:2px; clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px)}
+  .btn-2:hover{background:color-mix(in srgb,var(--rose) 12%,transparent)}
+  .btn-3{color:#fff; background:var(--mint); border-radius:100px; box-shadow:inset 0 0 0 4px color-mix(in srgb,#fff 28%,transparent)}
+  .btn-3:hover{box-shadow:inset 0 0 0 4px color-mix(in srgb,#fff 42%,transparent),0 12px 26px -12px var(--mint)}
+
+  /* PORTRAIT */
+  .hero-portrait{position:relative; justify-self:center; width:min(420px,92%)}
+  .frame{position:relative; background:transparent; border:0; overflow:visible; aspect-ratio:4/4.6; box-shadow:none; display:grid; place-items:center}
+  .cig{height:90%; width:auto; filter:drop-shadow(0 14px 26px rgba(20,22,30,.28))}
+  .cig .ember{animation:ember 1.1s ease-in-out infinite}
+  @keyframes ember{0%,100%{opacity:.55} 50%{opacity:1}}
+  .smoke{position:absolute; top:3%; left:50%; width:90px; height:56%; pointer-events:none; transform:translateX(-50%); animation:burnfollow 30s linear infinite}
+  .smoke span{position:absolute; left:50%; bottom:0; width:17px; height:17px; border-radius:50%; background:radial-gradient(circle,rgba(188,190,196,.62),rgba(188,190,196,0) 70%); animation:smoke 3.8s ease-in infinite}
+  .smoke span:nth-child(2){animation-delay:.8s} .smoke span:nth-child(3){animation-delay:1.6s} .smoke span:nth-child(4){animation-delay:2.4s} .smoke span:nth-child(5){animation-delay:3.1s}
+  @keyframes smoke{0%{opacity:0; transform:translate(-50%,0) scale(.5)} 14%{opacity:.82} 55%{opacity:.5} 100%{opacity:0; transform:translate(calc(-50% + 20px),-260px) scale(3.2)}}
+  @keyframes burnfollow{0%{transform:translate(-50%,0)} 100%{transform:translate(-50%,168px)}}
+  @media(prefers-reduced-motion:reduce){ .cig .ember,.smoke span,.smoke{animation:none} }
+  .pill{position:absolute; display:inline-flex; align-items:center; gap:8px; background:#fff; color:var(--ink); font-weight:600; font-size:.82rem; padding:8px 14px; border-radius:100px; box-shadow:0 10px 26px -10px rgba(20,22,30,.3); z-index:3}
+  .pill i{width:8px; height:8px; border-radius:50%}
+  .pill.p1{top:16%; right:-14px} .pill.p1 i{background:var(--blue)}
+  .pill.p2{bottom:16%; left:-16px} .pill.p2 i{background:var(--rose)}
+  .mask{position:absolute; right:14px; bottom:14px; width:40px; height:40px; color:var(--ink); z-index:3; opacity:.9}
+  @media(max-width:860px){ .hero-portrait{margin:8px auto 0} .pill.p1{right:0} .pill.p2{left:0} }
+
+  /* pager */
+  .pager{position:absolute; right:22px; top:50%; transform:translateY(-50%); z-index:5; display:flex; flex-direction:column; align-items:center; gap:12px; font-family:var(--m); font-size:.72rem; color:var(--faint)}
+  .pager .dot{width:11px; height:11px; border-radius:50%; border:1.5px solid var(--line-2); background:var(--surface); cursor:pointer; transition:all .25s; padding:0}
+  .pager .dot.active{border-color:var(--ink); box-shadow:0 0 0 3px color-mix(in srgb,var(--ink) 12%,transparent)}
+  @media(max-width:1040px){ .pager{display:none} }
+  .scroll-ind{position:absolute; left:max(22px,env(safe-area-inset-left,0px)); bottom:22px; z-index:5; display:flex; align-items:center; gap:9px; font-family:var(--m); font-size:.76rem; color:var(--muted)}
+  .scroll-ind svg{width:17px; height:24px}
+  @media(max-width:860px){ .scroll-ind{display:none} }
+
+  /* SECTIONS */
+  section{padding-block:clamp(56px,8vw,96px); position:relative}
+  .sec-head{display:flex; align-items:center; gap:16px; margin-bottom:12px}
+  .sec-head .num{font-family:var(--m); font-size:.82rem; padding:4px 10px; border-radius:7px; color:var(--a); background:color-mix(in srgb,var(--a) 14%,transparent); border:1px solid color-mix(in srgb,var(--a) 40%,transparent)}
+  .sec-head h2{font-size:clamp(1.9rem,5vw,3rem); font-weight:800; letter-spacing:-.02em; color:var(--ink)}
+  .divider{display:flex; align-items:center; gap:14px; margin:0 0 36px; color:var(--a)}
+  .divider .ln{height:1px; flex:1; background:linear-gradient(90deg,transparent,currentColor,transparent); opacity:.5}
+  .divider svg{width:46px; height:22px}
+  .sec-sub{color:var(--muted); max-width:62ch; margin-bottom:32px; font-size:.98rem}
+
+  #about{--a:var(--sky)} #skills{--a:var(--teal)} #writeups{--a:var(--rose)}
+  #bugbounty{--a:var(--grape)} #projects{--a:var(--mint)} #certs{--a:var(--peach)} #contact{--a:var(--gold)}
+
+  .reveal{opacity:1; transform:none}
+  .js .reveal{opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1)}
+  .js .reveal.in{opacity:1; transform:none}
+  @media(prefers-reduced-motion:reduce){ .js .reveal{opacity:1!important; transform:none!important} }
+
+  .card{position:relative; background-color:color-mix(in srgb,var(--a,var(--line)) 76%,#000); background-image:var(--pat); background-size:46px 46px; border:1.5px solid rgba(255,255,255,.2); border-radius:16px; padding:24px; transition:transform .22s, border-color .25s, box-shadow .3s}
+  .card:hover{transform:translateY(-4px); box-shadow:0 22px 44px -26px var(--a)}
+  .card .corner{color:var(--a)}
+
+  /* ABOUT */
+  .about-grid{display:grid; grid-template-columns:1.25fr .9fr; gap:24px}
+  @media(max-width:760px){.about-grid{grid-template-columns:1fr}}
+  .about-grid p{color:var(--muted); margin-bottom:14px}
+  .about-grid p strong{color:var(--ink); font-weight:700}
+  .info-row{display:flex; justify-content:space-between; gap:14px; padding:11px 2px; border-bottom:1px dashed color-mix(in srgb,var(--a) 35%,transparent)}
+  .info-row:last-child{border-bottom:0}
+  .info-row .k{font-family:var(--m); font-size:.76rem; color:var(--faint); text-transform:uppercase; letter-spacing:.5px}
+  .info-row .v{font-weight:700; text-align:right; color:var(--ink)}
+
+  /* SKILLS / generic chips */
+  .grid-auto{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px}
+  .skill-card h3{font-family:var(--m); font-size:.78rem; text-transform:uppercase; letter-spacing:1.2px; color:var(--a); margin-bottom:14px; font-weight:500}
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .chip{font-family:var(--m); font-size:.77rem; padding:5px 11px; border-radius:7px; border:1px solid color-mix(in srgb,var(--a) 42%,transparent); color:var(--ink); background:#fff; transition:background .2s,color .2s}
+  .chip:hover{background:var(--a); color:#fff}
+
+  /* WRITEUPS */
+  .wu-grid{display:grid; gap:20px}
+  .wu-top{display:flex; flex-wrap:wrap; align-items:center; gap:11px; margin-bottom:12px}
+  .wu-top h3{font-family:var(--d); font-weight:800; font-size:1.3rem; color:var(--ink)}
+  .badge{font-family:var(--m); font-size:.68rem; text-transform:uppercase; letter-spacing:.6px; padding:4px 9px; border-radius:6px; border:1px solid var(--line-2); color:var(--muted); background:var(--surface)}
+  .badge.src{color:var(--a)} .badge.rooted{color:var(--mint); border-color:color-mix(in srgb,var(--mint) 45%,transparent)}
+  .badge.easy{color:var(--mint)} .badge.med{color:var(--peach)} .badge.soon{color:var(--faint)}
+  .wu p{color:var(--muted); font-size:.95rem; margin-bottom:14px}
+  .wu .take{color:var(--ink); font-size:.9rem; background:#fff; border-left:3px solid var(--a); padding:10px 14px; border-radius:0 8px 8px 0; margin-bottom:14px; box-shadow:0 2px 10px rgba(20,22,30,.04)}
+  .wu .take b{color:var(--a); font-family:var(--m); font-weight:500; font-size:.72rem; text-transform:uppercase; letter-spacing:.6px; display:block; margin-bottom:3px}
+  .tags{display:flex; flex-wrap:wrap; gap:7px}
+  .tag{font-family:var(--m); font-size:.71rem; color:var(--muted); border:1px solid var(--line-2); padding:3px 9px; border-radius:100px; background:var(--surface)}
+  .mini-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-top:24px}
+  .mini{position:relative; background-color:color-mix(in srgb,var(--a) 76%,#000); background-image:var(--pat); background-size:46px 46px; border:1.5px solid rgba(255,255,255,.2); border-radius:12px; padding:16px 18px; transition:transform .2s, box-shadow .3s}
+  .mini:hover{transform:translateY(-3px); box-shadow:0 16px 32px -22px var(--a)}
+  .mini .mh2{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:6px}
+  .mini h4{font-family:var(--d); font-weight:800; font-size:1rem; color:var(--ink)}
+  .mini .src{font-family:var(--m); font-size:.71rem; color:var(--faint)}
+
+  /* BUG BOUNTY */
+  #bugbounty .card p{color:var(--muted); font-size:.94rem; margin-bottom:12px}
+
+  /* PROJECTS */
+  .proj-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px}
+  @media(max-width:760px){.proj-grid{grid-template-columns:1fr}}
+  .proj{display:flex; flex-direction:column; gap:14px}
+  .proj .pt{display:flex; align-items:center; gap:12px}
+  .proj .ico{width:42px; height:42px; border-radius:11px; background:#fff; border:1px solid color-mix(in srgb,var(--a) 50%,transparent); display:grid; place-items:center; color:var(--a); font-family:var(--m); font-weight:600}
+  .proj h3{font-family:var(--d); font-weight:800; font-size:1.2rem; color:var(--ink)}
+  .proj p{color:var(--muted); font-size:.94rem; flex:1}
+  .proj .status{font-family:var(--m); font-size:.72rem; color:var(--a)}
+
+  /* CERTS */
+  .cert-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px}
+  .cert .cn{font-family:var(--d); font-weight:800; font-size:1.05rem; color:var(--ink); margin-bottom:4px}
+  .cert .cs{font-family:var(--m); font-size:.75rem; color:var(--faint)}
+  .cert .st{display:inline-block; margin-top:12px; font-family:var(--m); font-size:.71rem; padding:3px 9px; border-radius:100px; border:1px solid var(--line-2); background:var(--surface)}
+  .st.prog{color:var(--peach)} .st.done{color:var(--mint)}
+
+  /* CONTACT */
+  .contact-card{position:relative; background-color:color-mix(in srgb,var(--a) 74%,#000); background-image:var(--pat); background-size:46px 46px; border:1.5px solid rgba(255,255,255,.22); border-radius:18px; padding:clamp(26px,5vw,42px); max-width:760px; margin:0 auto; box-shadow:0 24px 54px -30px color-mix(in srgb,var(--a) 70%,#000)}
+  .contact-card h2{font-size:clamp(1.8rem,4.5vw,2.6rem); font-weight:800; color:var(--ink); margin-bottom:10px}
+  .contact-card>p{color:var(--muted); margin-bottom:24px; max-width:52ch}
+  .c-row{display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:14px 0; border-top:1px dashed color-mix(in srgb,var(--a) 34%,transparent)}
+  .c-row .ck{font-family:var(--m); font-size:.74rem; text-transform:uppercase; letter-spacing:1px; color:var(--faint); width:88px; flex-shrink:0}
+  .c-row .cv{font-family:var(--m); color:var(--ink); word-break:break-all; flex:1; min-width:0}
+  .c-row .cv a{color:var(--a)}
+  .copy{font-family:var(--m); font-size:.72rem; cursor:pointer; padding:6px 13px; background:var(--surface); transition:all .2s; display:inline-flex; align-items:center; gap:6px}
+  .copy svg{width:13px; height:13px}
+  .copy.c-blue{color:var(--blue); border:1px dashed var(--blue); border-radius:8px}
+  .copy.c-rose{color:var(--rose); border:1px solid var(--rose); border-radius:100px}
+  .copy.c-peach{color:var(--peach); border:1px dotted var(--peach); border-radius:3px}
+  .copy:hover{transform:translateY(-2px)}
+  .copy.ok{color:var(--mint); border-color:var(--mint)}
+
+  footer{padding-block:34px; text-align:center; color:var(--faint); font-family:var(--m); font-size:.78rem; border-top:1px solid var(--line)}
+  footer span{color:var(--rose)}
+  :focus-visible{outline:2px solid var(--blue); outline-offset:3px; border-radius:4px}
+
+  /* ===== har box ka apna rang — light tints, koi repeat nahi ===== */
+  #about .card{--card:#e5f6fb; --a:#2cbfe0}
+  #skills .grid-auto .card:nth-of-type(1){--card:#ffe9ef; --a:#ff6f91}
+  #skills .grid-auto .card:nth-of-type(2){--card:#e8f1ff; --a:#4f9dff}
+  #skills .grid-auto .card:nth-of-type(3){--card:#e2f8ee; --a:#1fc79a}
+  #skills .grid-auto .card:nth-of-type(4){--card:#fff0e2; --a:#ff9a57}
+  #skills .grid-auto .card:nth-of-type(5){--card:#f1ebff; --a:#9b7bff}
+  #writeups .wu-grid .wu:nth-of-type(1){--card:#ffe9f0; --a:#ff6f91}
+  #writeups .wu-grid .wu:nth-of-type(2){--card:#e6f6fb; --a:#2cbfe0}
+  #writeups .wu-grid .wu:nth-of-type(3){--card:#fdf4d8; --a:#d79b14}
+  #writeups .mini-grid .mini:nth-of-type(1){--card:#ffe9e6; --a:#ff7a6b}
+  #writeups .mini-grid .mini:nth-of-type(2){--card:#e2f8f2; --a:#13bfae}
+  #writeups .mini-grid .mini:nth-of-type(3){--card:#e8f0ff; --a:#4f9dff}
+  #writeups .mini-grid .mini:nth-of-type(4){--card:#f7ebff; --a:#c56bff}
+  #bugbounty .grid-auto .card:nth-of-type(1){--card:#e4f8f6; --a:#13bfae}
+  #bugbounty .grid-auto .card:nth-of-type(2){--card:#ffeaf1; --a:#ff6f91}
+  #bugbounty .grid-auto .card:nth-of-type(3){--card:#f1f8df; --a:#7fc62f}
+  #projects .proj-grid .card:nth-of-type(1){--card:#f1ebff; --a:#9b7bff}
+  #projects .proj-grid .card:nth-of-type(2){--card:#e4f7f0; --a:#1fc79a}
+  #certs .cert-grid .card:nth-of-type(1){--card:#e8eeff; --a:#5f8bff}
+  #certs .cert-grid .card:nth-of-type(2){--card:#fdf3d6; --a:#d79b14}
+  #certs .cert-grid .card:nth-of-type(3){--card:#f6ecff; --a:#c56bff}
+  #certs .cert-grid .card:nth-of-type(4){--card:#e6f8ec; --a:#2fb463}
+  #contact .contact-card{--card:#fdf5de; --a:#d79b14}
+
+  /* ===== deep cards → white text inside ===== */
+  .card,.mini{color:#fff}
+  .card h2,.card h3,.card h4,.mini h4,.contact-card h2{color:#fff}
+  .skill-card h3{color:#fff}
+  .card p,.mini .src,.contact-card>p,.proj p,#bugbounty .card p{color:rgba(255,255,255,.9)}
+  .wu p{color:rgba(255,255,255,.92)}
+  .proj .status{color:#fff}
+  .info-row{border-bottom-color:rgba(255,255,255,.3)}
+  .info-row .k{color:rgba(255,255,255,.72)} .info-row .v{color:#fff}
+  .chip{background:rgba(255,255,255,.17); color:#fff; border-color:rgba(255,255,255,.42)}
+  .chip:hover{background:#fff; color:var(--a)}
+  .card .badge,.mini .badge{background:rgba(255,255,255,.18); color:#fff!important; border-color:rgba(255,255,255,.45)}
+  .tag{color:rgba(255,255,255,.88); border-color:rgba(255,255,255,.4); background:transparent}
+  .proj .ico{background:rgba(255,255,255,.18); border-color:rgba(255,255,255,.5); color:#fff}
+  .cert .cn{color:#fff} .cert .cs{color:rgba(255,255,255,.78)}
+  .card .st{background:rgba(255,255,255,.17); color:#fff!important; border-color:rgba(255,255,255,.42)}
+  .card .corner,.mini .corner,.contact-card .corner{color:rgba(255,255,255,.65)}
+  .contact-card h2,.contact-card{color:#fff}
+  .c-row{border-top-color:rgba(255,255,255,.3)}
+  .c-row .ck{color:rgba(255,255,255,.75)} .c-row .cv{color:#fff} .c-row .cv a{color:#fff; text-decoration:underline}
+  .contact-card .copy{background:rgba(255,255,255,.16); color:#fff!important; border-color:rgba(255,255,255,.5)!important}
+  .contact-card .copy.ok{color:#fff!important}
+  img{max-width:100%;height:auto}
+</style>
 </head>
 <body>
+<!-- mehndi + icons -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="m-corner" viewBox="0 0 64 64">
+    <path class="mh" d="M4 60 C4 30 30 4 60 4"/><path class="mh" d="M12 60 C12 34 34 12 60 12"/>
+    <path class="mh" d="M20 58 C26 44 44 26 58 20 C46 24 40 30 36 40 C32 50 28 54 20 58 Z"/>
+    <circle class="dot" cx="48" cy="16" r="2"/><circle class="dot" cx="16" cy="48" r="2"/>
+    <path class="mh" d="M30 54 C28 48 30 44 34 42 M34 42 C40 40 44 42 46 48"/>
+  </symbol>
+  <symbol id="m-paisley" viewBox="0 0 24 24"><path class="mh" d="M14 2 C5 4 3 14 9 20 C15 25 22 19 20 12 C19 8 15 7 13 9 C11 11 13 15 16 14"/><circle class="dot" cx="16" cy="14" r="1.1"/></symbol>
+  <symbol id="m-flower" viewBox="0 0 24 24"><g class="mh"><circle cx="12" cy="12" r="2.4"/><path d="M12 3 C14 7 14 9 12 10 C10 9 10 7 12 3Z"/><path d="M21 12 C17 14 15 14 14 12 C15 10 17 10 21 12Z"/><path d="M12 21 C10 17 10 15 12 14 C14 15 14 17 12 21Z"/><path d="M3 12 C7 10 9 10 10 12 C9 14 7 14 3 12Z"/></g></symbol>
+  <symbol id="m-vine" viewBox="0 0 48 22"><path class="mh" d="M2 11 C10 3 14 19 22 11 C30 3 34 19 42 11"/><circle class="dot" cx="2" cy="11" r="1.5"/><circle class="dot" cx="22" cy="11" r="1.5"/><circle class="dot" cx="42" cy="11" r="1.5"/></symbol>
+  <symbol id="m-shield" viewBox="0 0 24 24"><path class="mh" d="M12 2 L20 5 V11 C20 16 16 20 12 22 C8 20 4 16 4 11 V5 Z"/><path class="mh" d="M12 6 C13 9 15 10 17 10 C17 14 14 17 12 18 C10 17 7 14 7 10 C9 10 11 9 12 6Z"/><circle class="dot" cx="12" cy="11" r="1.3"/></symbol>
+  <symbol id="i-mouse" viewBox="0 0 17 24"><rect x="1" y="1" width="15" height="22" rx="7.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8.5" cy="7" r="1.6" fill="currentColor"><animate attributeName="cy" values="7;13;7" dur="1.8s" repeatCount="indefinite"/></circle></symbol>
+  <symbol id="sil" viewBox="0 0 300 330">
+    <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#363a45"/><stop offset="1" stop-color="#565b68"/></linearGradient></defs>
+    <circle cx="150" cy="104" r="66" fill="url(#sg)"/>
+    <path d="M38 330 C38 246 90 196 150 196 C210 196 262 246 262 330 Z" fill="url(#sg)"/>
+  </symbol>
+</svg>
 
-  <!-- NAVBAR -->
-  <header class="navbar" id="navbar">
-    <a href="#home" class="logo">
-      <span class="logo-icon">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8L12 2zm7 11l.9 2.6L22.5 16.5l-2.6.9L19 20l-.9-2.6-2.6-.9 2.6-.9L19 13zM6 15l.7 1.8L8.5 17.5l-1.8.7L6 20l-.7-1.8L3.5 17.5l1.8-.7L6 15z"/></svg>
-      </span>
-      <span class="logo-text">Portfolio</span>
-    </a>
+<div id="bgp"></div>
+<canvas id="vortex" aria-hidden="true"></canvas>
 
-    <nav class="nav-links" id="navLinks">
-      <a href="#home" class="active">Home</a>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>
-    </nav>
+<nav>
+  <div class="wrap nav-in">
+    <a href="#top" style="display:flex;align-items:center;gap:11px"><span class="logo">P</span><span class="brand">Pradeep</span></a>
+    <div class="nav-links">
+      <a href="#top" class="active">Home</a><a href="#about">About</a><a href="#skills">Skills</a>
+      <a href="#writeups">Writeups</a><a href="#projects">Projects</a><a href="#contact" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
 
-    <a href="#contact" class="btn btn-light nav-cta">Let's Talk</a>
-
-    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
-  </header>
-
-  <main>
-    <!-- HERO -->
-    <section class="hero" id="home">
-      <div class="glow glow-1"></div>
-      <div class="glow glow-2"></div>
-
-      <div class="hero-left">
-        <div class="badge fade-up" style="--d:0s">
-          <span class="dot"></span> 
-        </div>
-        <p class="hello fade-up" style="--d:.1s">Hello, I'm</p>
-        <h1 class="name fade-up" style="--d:.2s">Pradeep</h1>
-        <h2 class="role fade-up" style="--d:.3s">
-          <span class="gradient-text">Cyber Security Student</span><br />
-          <span class="amp">&amp;</span> <span class="gradient-text">Bug Bounty Hunter</span>
-        </h2>
-        <p class="intro fade-up" style="--d:.4s">
-          I break things to learn how to secure them. Web security, recon, and
-          building my own tools &mdash; with clean code and a hacker's curiosity.
-        </p>
-
-        <div class="hero-btns fade-up" style="--d:.5s">
-          <a href="#projects" class="btn btn-light btn-lg">
-            View My Work
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-          </a>
-          <a href="#contact" class="btn btn-dark btn-lg">Get In Touch</a>
-        </div>
-
-        <div class="socials fade-up" style="--d:.6s">
-          <a href="https://github.com/pradeepbhobhiya63-beep" target="_blank" rel="noopener" aria-label="GitHub">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-.9-2.6c3.1-.3 6.4-1.5 6.4-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 1S18.7.7 16 2.5a13.4 13.4 0 0 0-7 0C6.3.7 5.1 1 5.1 1A5 5 0 0 0 5 4.8a5.4 5.4 0 0 0-1.5 3.7c0 5.5 3.3 6.7 6.4 7a3.4 3.4 0 0 0-.9 2.6V22"/></svg>
-          </a>
-          <a href="mailto:pradeepbhobhiya63@gmail.com" aria-label="Email">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
-          </a>
-        </div>
+<header class="hero" id="top">
+  <div class="hero-wm">SEC</div>
+  <div class="wrap hero-grid">
+    <div class="hero-left">
+      <h1>प्रदीप</h1>
+      <div class="sub">Published work · Security Researcher</div>
+      <span class="mid-dot"></span>
+      <div class="power">
+        <h4>Focus</h4>
+        <p>Web Application Security, OSINT &amp; Bug Bounty Hunting — offensive skills built through CTFs, real-world vulnerability research, and independent tool development.</p>
       </div>
-
-      <div class="hero-right fade-up" style="--d:.5s">
-        <div class="code-card">
-          <div class="card-top">
-            <span class="c red"></span><span class="c yellow"></span><span class="c green"></span>
-            <span class="file">developer.js</span>
-          </div>
-          <pre class="code" id="codeBlock"></pre>
-          <div class="stats">
-            <div><h3><span class="count" data-target="2">0</span>+</h3><p>Projects</p></div>
-            <div><h3><span class="count" data-target="5">0</span>+</h3><p>Recon Sources</p></div>
-            <div><h3><span class="count" data-target="1">0</span></h3><p>Bug Bounty</p></div>
-          </div>
-        </div>
+      <div class="cta-row">
+        <a class="btn btn-1" href="https://github.com/pradeepbhobhiya63-beep" target="_blank" rel="noopener"><svg class="ic"><use href="#m-paisley"/></svg>GitHub</a>
+        <a class="btn btn-2" href="#writeups"><svg class="ic"><use href="#m-flower"/></svg>Writeups</a>
+        <a class="btn btn-3" href="#contact"><svg class="ic"><use href="#m-vine"/></svg>Contact</a>
       </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section class="section" id="about">
-      <div class="container">
-        <p class="eyebrow reveal">About</p>
-        <h2 class="title reveal">A little about me</h2>
-        <div class="about-grid">
-          <p class="about-text reveal">
-            I'm a B.Tech CSE (Cyber Security) student at <strong>JECRC University, Jaipur</strong>
-            (2026&ndash;2027). I have hands-on experience in web application security, OSINT and
-            bug bounty hunting, and I'm actively building offensive-security skills through CTFs,
-            real-world vulnerability research and independent tool development.
-            <br /><br />
-            Before college I also built full-stack apps with React and Node.js, so I understand
-            applications from both the builder's and the attacker's side. Looking for a
-            security-focused internship or entry-level role.
-          </p>
-          <div class="info-cards reveal">
-            <div class="info-card"><span>Education</span><p>CSE (Cyber Security), JECRC University</p></div>
-            <div class="info-card"><span>Location</span><p>Jaipur, Rajasthan</p></div>
-            <div class="info-card"><span>Languages</span><p>Hindi, English</p></div>
-          </div>
-        </div>
+    </div>
+    <div class="hero-portrait">
+      <div class="frame">
+        <div class="smoke"><span></span><span></span><span></span><span></span><span></span></div>
+        <svg class="cig" viewBox="0 0 120 320" xmlns="http://www.w3.org/2000/svg" aria-label="burning cigarette">
+          <defs>
+            <linearGradient id="paper" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#dedcd6"/><stop offset=".16" stop-color="#fbfbf9"/><stop offset=".5" stop-color="#ffffff"/><stop offset=".84" stop-color="#eae8e2"/><stop offset="1" stop-color="#d2d0c9"/>
+            </linearGradient>
+            <linearGradient id="cork" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#bd8636"/><stop offset=".28" stop-color="#e6bb6c"/><stop offset=".55" stop-color="#d7a24a"/><stop offset="1" stop-color="#ad7828"/>
+            </linearGradient>
+            <radialGradient id="glow" cx="50%" cy="45%" r="55%">
+              <stop offset="0" stop-color="#fff0b0"/><stop offset=".35" stop-color="#ff9a2a"/><stop offset=".7" stop-color="#ff5a1f"/><stop offset="1" stop-color="#7d2400"/>
+            </radialGradient>
+            <linearGradient id="ash" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#7f7d79"/><stop offset=".5" stop-color="#a7a5a0"/><stop offset="1" stop-color="#6e6c68"/>
+            </linearGradient>
+          </defs>
+          <!-- cork filter (fixed, bottom) -->
+          <rect x="43" y="262" width="34" height="50" rx="5" fill="url(#cork)"/>
+          <rect x="43" y="258" width="34" height="5" fill="#8f6320"/>
+          <g fill="#8f6320" opacity=".55"><circle cx="51" cy="274" r="1.6"/><circle cx="67" cy="282" r="1.6"/><circle cx="60" cy="268" r="1.3"/><circle cx="57" cy="295" r="1.4"/><circle cx="69" cy="299" r="1.2"/><circle cx="50" cy="290" r="1.2"/></g>
+          <!-- paper -->
+          <rect x="43" y="66" width="34" height="194" rx="3" fill="url(#paper)"/>
+          <rect x="43" y="66" width="2.4" height="194" fill="#cfcdc6"/><rect x="74.6" y="66" width="2.4" height="194" fill="#cfcdc6"/>
+          <!-- ash growing from top over 30s -->
+          <rect x="43" y="66" width="34" height="3" fill="url(#ash)">
+            <animate attributeName="height" values="3;190" dur="30s" repeatCount="indefinite"/>
+          </rect>
+          <!-- descending ember head -->
+          <g>
+            <animateTransform attributeName="transform" type="translate" values="0 0; 0 187" dur="30s" repeatCount="indefinite"/>
+            <path d="M43 72 Q50 64 60 68 Q70 64 77 72 L77 66 L43 66 Z" fill="#9a9894"/>
+            <ellipse class="ember" cx="60" cy="70" rx="19" ry="10" fill="url(#glow)"/>
+            <ellipse cx="60" cy="70" rx="12" ry="5" fill="#ffcf5c" opacity=".85"/>
+          </g>
+        </svg>
       </div>
-    </section>
+      <span class="pill p1"><i></i>Web AppSec</span>
+      <span class="pill p2"><i></i>Bug Bounty Hunter</span>
+      <svg class="mask"><use href="#m-shield"/></svg>
+    </div>
+  </div>
+  <div class="pager" id="pager"></div>
+  <div class="scroll-ind"><svg><use href="#i-mouse"/></svg>Scroll</div>
+</header>
 
-    <!-- SKILLS -->
-    <section class="section alt" id="skills">
-      <div class="container">
-        <p class="eyebrow reveal">Skills</p>
-        <h2 class="title reveal">What I work with</h2>
-        <div class="skill-grid">
-          <div class="skill-card reveal">
-            <h3>Languages</h3>
-            <div class="tags"><span>Python</span><span>JavaScript</span></div>
-          </div>
-          <div class="skill-card reveal">
-            <h3>Web Development</h3>
-            <div class="tags"><span>React</span><span>Node.js / Express</span><span>JWT &amp; bcrypt auth</span></div>
-          </div>
-          <div class="skill-card reveal">
-            <h3>Security Tooling</h3>
-            <div class="tags"><span>Burp Suite</span><span>Caido</span><span>PortSwigger Labs</span><span>exiftool</span><span>binwalk</span><span>Tor</span><span>ARP scanning</span></div>
-          </div>
-          <div class="skill-card reveal">
-            <h3>Bug Bounty / Recon</h3>
-            <div class="tags"><span>Subdomain enumeration</span><span>LinkFinder / JSFinder / SecretFinder</span><span>IDOR &amp; API tampering</span><span>Business logic testing</span></div>
-          </div>
-          <div class="skill-card reveal">
-            <h3>Platforms</h3>
-            <div class="tags"><span>Kali Linux</span><span>Git / GitHub</span></div>
-          </div>
-          <div class="skill-card reveal">
-            <h3>Studying</h3>
-            <div class="tags"><span>API Security</span><span>OSINT</span><span>Reverse Engineering</span><span>Cloud Security</span><span>Malware Analysis</span></div>
-          </div>
-        </div>
+<main class="wrap">
+
+  <section id="about">
+    <div class="sec-head"><span class="num">01</span><h2>About</h2></div>
+    <div class="divider"><span class="ln"></span><svg><use href="#m-vine"/></svg><span class="ln"></span></div>
+    <div class="about-grid reveal">
+      <div>
+        <p>I'm a <strong>Cyber Security undergraduate</strong> at JECRC University, Jaipur, in the Computer Science &amp; Engineering (Cyber Security) track. My day-to-day is offensive security: breaking web apps, mapping attack surface through OSINT, and hunting bugs on authorized programs.</p>
+        <p>I learn by doing — rooting vulnerable machines, working through PortSwigger Web Security Academy labs, and building my own recon tooling in Python. Self-study spans <strong>Web Security, API Security, OSINT, Reverse Engineering, OS internals, Cloud Security, and malware analysis.</strong></p>
+        <p>Right now I'm looking for a security-focused internship or entry-level role.</p>
       </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section class="section" id="projects">
-      <div class="container">
-        <p class="eyebrow reveal">Projects</p>
-        <h2 class="title reveal">Things I've built</h2>
-        <div class="project-grid">
-          <article class="project-card reveal">
-            <div class="project-icon">&#128269;</div>
-            <h3>Subdomain Enumeration Tool</h3>
-            <p>
-              Python CLI that aggregates subdomains from crt.sh, HackerTarget, OTX, RapidDNS and
-              the Wayback Machine CDX API, with argparse options, error handling and file output.
-              Currently reworking it into a subfinder-style tool with async plugin-based sources
-              and per-host confidence scoring.
-            </p>
-            <div class="tags"><span>Python</span><span>Recon</span><span>CLI</span></div>
-          </article>
-
-          <article class="project-card reveal">
-            <div class="project-icon">&#128176;</div>
-            <h3>Where Did My Money Go?</h3>
-            <p>
-              Full-stack personal finance tracker with a React frontend and Node.js/Express backend.
-              Modules for bank accounts, stock &amp; mutual fund investments, and loans given to
-              others, with a multi-user auth system using bcryptjs and JWT.
-            </p>
-            <div class="tags"><span>React</span><span>Node.js</span><span>JWT</span></div>
-          </article>
-        </div>
+      <div class="card"><svg class="corner tl"><use href="#m-corner"/></svg><svg class="corner br"><use href="#m-corner"/></svg>
+        <div class="info-row"><span class="k">University</span><span class="v">JECRC, Jaipur</span></div>
+        <div class="info-row"><span class="k">Branch</span><span class="v">CSE — Cyber Sec</span></div>
+        <div class="info-row"><span class="k">Based in</span><span class="v">Rajasthan, India</span></div>
+        <div class="info-row"><span class="k">Hometown</span><span class="v">Hanumangarh</span></div>
+        <div class="info-row"><span class="k">Languages</span><span class="v">Hindi, English</span></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- EXPERIENCE -->
-    <section class="section alt" id="experience">
-      <div class="container">
-        <p class="eyebrow reveal">Experience</p>
-        <h2 class="title reveal">Security practice &amp; achievements</h2>
-        <div class="timeline">
-          <div class="t-item reveal">
-            <span class="t-dot"></span>
-            <h3>Flipkart Bug Bounty Program</h3>
-            <p>Participating in the public program, focused on IDOR, API tampering, business logic and checkout/coupon flaws.</p>
-          </div>
-          <div class="t-item reveal">
-            <span class="t-dot"></span>
-            <h3>PortSwigger Web Security Academy</h3>
-            <p>Working through labs on SQL Injection, Authentication, IDOR, Business Logic and Access Control.</p>
-          </div>
-          <div class="t-item reveal">
-            <span class="t-dot"></span>
-            <h3>picoCTF</h3>
-            <p>Solving challenges as part of a structured CTF learning path.</p>
-          </div>
-          <div class="t-item reveal">
-            <span class="t-dot"></span>
-            <h3>Daily practice routine</h3>
-            <p>Security labs and bug hunting every day, building skills one vulnerability at a time.</p>
-          </div>
-        </div>
+  <section id="skills">
+    <div class="sec-head"><span class="num">02</span><h2>Technical Skills</h2></div>
+    <div class="divider"><span class="ln"></span><svg><use href="#m-flower"/></svg><span class="ln"></span></div>
+    <div class="grid-auto">
+      <div class="card skill-card reveal"><svg class="corner tr"><use href="#m-corner"/></svg><h3>Languages</h3><div class="chips"><span class="chip">Python</span><span class="chip">JavaScript</span></div></div>
+      <div class="card skill-card reveal"><h3>Web Development</h3><div class="chips"><span class="chip">React</span><span class="chip">Node.js / Express</span><span class="chip">JWT + bcrypt</span></div></div>
+      <div class="card skill-card reveal"><svg class="corner br"><use href="#m-corner"/></svg><h3>Security Tooling</h3><div class="chips"><span class="chip">Burp Suite</span><span class="chip">Caido</span><span class="chip">exiftool</span><span class="chip">binwalk</span><span class="chip">Tor</span></div></div>
+      <div class="card skill-card reveal"><h3>Recon</h3><div class="chips"><span class="chip">Subdomain enum</span><span class="chip">JS endpoints</span><span class="chip">IDOR</span><span class="chip">Wayback CDX</span></div></div>
+      <div class="card skill-card reveal"><h3>Platforms</h3><div class="chips"><span class="chip">Kali Linux</span><span class="chip">Git / GitHub</span><span class="chip">PortSwigger</span></div></div>
+    </div>
+  </section>
+
+  <section id="writeups">
+    <div class="sec-head"><span class="num">03</span><h2>CTF Writeups</h2></div>
+    <div class="divider"><span class="ln"></span><svg><use href="#m-paisley"/></svg><span class="ln"></span></div>
+    <p class="sec-sub">Documented penetration-testing reports — recon, exploitation, and privilege escalation, written up end to end.</p>
+    <div class="wu-grid">
+      <article class="card wu reveal"><svg class="corner tl"><use href="#m-corner"/></svg><svg class="corner br"><use href="#m-corner"/></svg>
+        <div class="wu-top"><h3>Basic Pentesting: 1</h3><span class="badge src">VulnHub</span><span class="badge easy">Easy</span><span class="badge rooted">● Rooted</span></div>
+        <p>Full chain from external recon to shell: Nmap surfaced FTP / SSH / HTTP, directory brute-forcing uncovered a hidden WordPress install, and weak admin credentials led to a reverse shell as <span class="mono">www-data</span>. Escalated by cracking a user hash offline and pivoting over SSH.</p>
+        <div class="take"><b>Key takeaway</b>Documented two parallel attack paths (service vs. web) and the quirk that a theme's 404.php only fires when requested directly.</div>
+        <div class="tags"><span class="tag">Nmap</span><span class="tag">Gobuster</span><span class="tag">WordPress</span><span class="tag">Reverse shell</span><span class="tag">John</span><span class="tag">SSH pivot</span></div>
+      </article>
+      <article class="card wu reveal"><svg class="corner tr"><use href="#m-corner"/></svg>
+        <div class="wu-top"><h3>Healthcare</h3><span class="badge src">VulnHub</span><span class="badge med">Medium</span><span class="badge rooted">● Rooted</span></div>
+        <p>Directory enumeration exposed an <span class="mono">/openemr</span> path running an outdated OpenEMR v4.1.0 EHR. Version fingerprinting let me match a known public CVE, extract credentials, and crack the recovered hashes for admin access.</p>
+        <div class="take"><b>Key takeaway</b>Precise version identification turns a blind attack into a targeted one — fingerprint first, then find the exact matching exploit.</div>
+        <div class="tags"><span class="tag">Nmap</span><span class="tag">Gobuster</span><span class="tag">OpenEMR</span><span class="tag">CVE research</span><span class="tag">Hash cracking</span></div>
+      </article>
+      <article class="card wu reveal"><svg class="corner bl"><use href="#m-corner"/></svg>
+        <div class="wu-top"><h3>Natas 0 → 11</h3><span class="badge src">OverTheWire</span><span class="badge easy">Web Fundamentals</span><span class="badge rooted">● 11 levels</span></div>
+        <p>A level-by-level walkthrough of server-side web security: source disclosure, directory listings, robots.txt leaks, Referer and cookie tampering with Caido, LFI via a <span class="mono">page</span> parameter, and reversing a layered encoding scheme.</p>
+        <div class="take"><b>Key takeaway</b>Most early-stage web bugs come down to trusting client-controlled input — headers, cookies, and parameters are all attacker-editable.</div>
+        <div class="tags"><span class="tag">Caido</span><span class="tag">Header tampering</span><span class="tag">Cookie manip</span><span class="tag">LFI</span><span class="tag">Encoding</span></div>
+      </article>
+    </div>
+    <h3 style="font-family:var(--m);font-weight:500;font-size:.8rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--coral);margin-top:40px;">More machines rooted · writeups in progress</h3>
+    <div class="mini-grid">
+      <div class="mini reveal"><div class="mh2"><h4>Mr Robot</h4><span class="badge rooted">● Rooted</span></div><span class="src mono">VulnHub · soon</span></div>
+      <div class="mini reveal"><div class="mh2"><h4>Metasploitable 2</h4><span class="badge rooted">● Rooted</span></div><span class="src mono">VulnHub · soon</span></div>
+      <div class="mini reveal"><div class="mh2"><h4>Metasploitable 3</h4><span class="badge rooted">● Rooted</span></div><span class="src mono">VulnHub · soon</span></div>
+      <div class="mini reveal"><div class="mh2"><h4>Jackpot (ATM)</h4><span class="badge soon">In progress</span></div><span class="src mono">TryHackMe · XFS</span></div>
+    </div>
+  </section>
+
+  <section id="bugbounty">
+    <div class="sec-head"><span class="num">04</span><h2>Bug Bounty &amp; VDP</h2></div>
+    <div class="divider"><span class="ln"></span><svg><use href="#m-flower"/></svg><span class="ln"></span></div>
+    <p class="sec-sub">Active vulnerability research on authorized public programs — a daily routine of recon, labs, and manual testing.</p>
+    <div class="grid-auto">
+      <div class="card skill-card reveal"><svg class="corner tl"><use href="#m-corner"/></svg><h3>Programs &amp; Practice</h3><p>Participating in public bug bounty programs and structured labs, with written authorization for every target.</p><div class="chips"><span class="chip">Flipkart BBP</span><span class="chip">PortSwigger</span><span class="chip">picoCTF</span><span class="chip">TryHackMe</span></div></div>
+      <div class="card skill-card reveal"><h3>Vulnerability Classes</h3><p>Where I spend testing time on web targets:</p><div class="chips"><span class="chip">IDOR</span><span class="chip">API tampering</span><span class="chip">Business logic</span><span class="chip">Access control</span><span class="chip">SQLi</span><span class="chip">XSS</span></div></div>
+      <div class="card skill-card reveal"><svg class="corner br"><use href="#m-corner"/></svg><h3>Recon Pipeline</h3><p>Subdomain discovery, live-host filtering, endpoint mining:</p><div class="chips"><span class="chip">subfinder</span><span class="chip">httpx</span><span class="chip">katana</span><span class="chip">gau</span><span class="chip">LinkFinder</span><span class="chip">crt.sh</span></div></div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="sec-head"><span class="num">05</span><h2>Projects</h2></div>
+    <div class="divider"><span class="ln"></span><svg><use href="#m-paisley"/></svg><span class="ln"></span></div>
+    <div class="proj-grid">
+      <div class="card proj reveal"><svg class="corner tr"><use href="#m-corner"/></svg>
+        <div class="pt"><span class="ico">&gt;_</span><h3>OSINT Subdomain Tool</h3></div>
+        <p>A Python CLI that aggregates subdomains from crt.sh, HackerTarget, OTX, RapidDNS, and the Wayback CDX API — with argparse options, source-specific error handling, and file output. Debugged edge cases like URL-encoded wildcard handling.</p>
+        <span class="status">◇ In progress — reworking into an async, plugin-based CLI with per-host confidence scoring</span>
       </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section class="section" id="contact">
-      <div class="container contact">
-        <p class="eyebrow reveal">Contact</p>
-        <h2 class="title reveal">Let's work together</h2>
-        <p class="contact-text reveal">
-          Internship, collaboration ya bas ek chat &mdash; mera inbox hamesha open hai.
-        </p>
-        <div class="reveal">
-          <a href="mailto:pradeepbhobhiya63@gmail.com" class="btn btn-light btn-lg">Say Hello</a>
-          <a href="https://github.com/pradeepbhobhiya63-beep" target="_blank" rel="noopener" class="btn btn-dark btn-lg">GitHub</a>
-        </div>
+      <div class="card proj reveal"><svg class="corner bl"><use href="#m-corner"/></svg>
+        <div class="pt"><span class="ico">₹</span><h3>Finance Tracker</h3></div>
+        <p>A full-stack personal finance app — React frontend, Node.js / Express backend. Modules for bank accounts, investments, and loans, behind multi-user auth using bcryptjs and JWT sessions.</p>
+        <span class="status">● Full-stack · auth · multi-user</span>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <footer class="footer">
-    <p>&copy; <span id="year"></span> Pradeep. Built with HTML, CSS &amp; JS.</p>
-  </footer>
+  <section id="certs">
+    <div class="sec-head"><span class="num">06</span><h2>Certifications &amp; Platforms</h2></div>
+    <div class="divider"><span class="ln"></span><svg><use href="#m-flower"/></svg><span class="ln"></span></div>
+    <div class="cert-grid">
+      <div class="card cert reveal"><div class="cn">CEH Practical</div><div class="cs">EC-Council</div><span class="st prog">◷ In preparation</span></div>
+      <div class="card cert reveal"><div class="cn">PortSwigger Academy</div><div class="cs">Web Security Labs</div><span class="st done">● Ongoing</span></div>
+      <div class="card cert reveal"><div class="cn">OverTheWire</div><div class="cs">Natas · wargames</div><span class="st done">● Active</span></div>
+      <div class="card cert reveal"><div class="cn">TryHackMe / HTB</div><div class="cs">Hands-on labs</div><span class="st done">● Active</span></div>
+    </div>
+  </section>
 
-  <script src="script.js"></script>
+</main>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-card reveal">
+      <svg class="corner tl"><use href="#m-corner"/></svg><svg class="corner tr"><use href="#m-corner"/></svg>
+      <svg class="corner bl"><use href="#m-corner"/></svg><svg class="corner br"><use href="#m-corner"/></svg>
+      <div style="font-family:var(--m);color:rgba(255,255,255,.85);font-size:.82rem;letter-spacing:1px;margin-bottom:6px">07 · CONTACT</div>
+      <h2>Let's talk security.</h2>
+      <p>Open to security internships, bug bounty collaboration, and research chats. Fastest way to reach me is email.</p>
+      <div class="c-row"><span class="ck">Email</span><span class="cv" id="email">pradeepbhobhiya63@gmail.com</span><button class="copy c-blue" data-copy="pradeepbhobhiya63@gmail.com"><svg><use href="#m-paisley"/></svg>Copy</button></div>
+      <div class="c-row"><span class="ck">Phone</span><span class="cv">+91 6376160146</span><button class="copy c-rose" data-copy="+916376160146"><svg><use href="#m-flower"/></svg>Copy</button></div>
+      <div class="c-row"><span class="ck">GitHub</span><span class="cv"><a href="https://github.com/pradeepbhobhiya63-beep" target="_blank" rel="noopener">github.com/pradeepbhobhiya63-beep</a></span><button class="copy c-peach" data-copy="https://github.com/pradeepbhobhiya63-beep"><svg><use href="#m-vine"/></svg>Copy</button></div>
+      <div class="c-row"><span class="ck">Location</span><span class="cv">Jaipur, Rajasthan · India</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>Built &amp; designed by Pradeep · <span>stay curious, test responsibly</span></footer>
+
+<script>
+(function(){
+  "use strict";
+  var root=document.documentElement; root.classList.add('js');
+
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }); },{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else { document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); }); }
+
+  /* pager 01..05 */
+  var ids=['about','skills','writeups','projects','contact'];
+  var pager=document.getElementById('pager');
+  if(pager){
+    var top=document.createElement('span'); top.textContent='01'; pager.appendChild(top);
+    ids.forEach(function(id,i){ var b=document.createElement('button'); b.className='dot'; b.setAttribute('aria-label',id);
+      b.addEventListener('click',function(){ var s=document.getElementById(id); if(s) s.scrollIntoView({behavior:'smooth'}); }); pager.appendChild(b); });
+    var bot=document.createElement('span'); bot.textContent='0'+ids.length; pager.appendChild(bot);
+  }
+  var dots=pager?[].slice.call(pager.querySelectorAll('.dot')):[];
+
+  /* nav + pager active */
+  var navlinks=[].slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+  function onScroll(){
+    var y=window.scrollY+140, ai=-1;
+    ids.forEach(function(id,i){ var s=document.getElementById(id); if(s && s.offsetTop<=y) ai=i; });
+    dots.forEach(function(d,i){ d.classList.toggle('active', i===ai); });
+    var secs=['top','about','skills','writeups','projects','contact'], ni=0;
+    secs.forEach(function(id,i){ var s=document.getElementById(id); if(s && s.offsetTop-150<=window.scrollY) ni=i; });
+    navlinks.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href')==='#'+secs[ni]); });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  document.querySelectorAll('.copy').forEach(function(b){
+    b.addEventListener('click',function(){ var txt=b.getAttribute('data-copy');
+      function done(){ b.classList.add('ok'); var last=b.childNodes[b.childNodes.length-1]; var old=last.nodeValue; last.nodeValue='Copied'; setTimeout(function(){ b.classList.remove('ok'); last.nodeValue=old; },1400); }
+      if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done,function(){sel(b);}); } else sel(b);
+    });
+  });
+  function sel(b){ try{ var r=document.createRange(); r.selectNode(b.closest('.c-row').querySelector('.cv')); var s=getSelection(); s.removeAllRanges(); s.addRange(r); }catch(e){} }
+
+  /* ---- original ethnic (bandhani/ikat) patterns ---- */
+  function uri(svg){ return 'url("data:image/svg+xml,'+encodeURIComponent(svg)+'")'; }
+  var boxTile =
+    "<svg xmlns='http://www.w3.org/2000/svg' width='46' height='46' viewBox='0 0 46 46'>"+
+    "<g fill='none' stroke='rgba(255,255,255,0.34)' stroke-width='1.3'>"+
+    "<path d='M23 3 L43 23 L23 43 L3 23 Z' stroke-dasharray='1.4 3'/>"+
+    "<circle cx='23' cy='23' r='7.5' stroke-dasharray='1.4 2.6'/></g>"+
+    "<g fill='rgba(255,255,255,0.36)'>"+
+    "<circle cx='23' cy='23' r='2'/><circle cx='23' cy='3' r='1.3'/><circle cx='23' cy='43' r='1.3'/>"+
+    "<circle cx='3' cy='23' r='1.3'/><circle cx='43' cy='23' r='1.3'/>"+
+    "<circle cx='3' cy='3' r='1.3'/><circle cx='43' cy='3' r='1.3'/><circle cx='3' cy='43' r='1.3'/><circle cx='43' cy='43' r='1.3'/></g></svg>";
+  var pageTile =
+    "<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'>"+
+    "<g fill='none' stroke-width='2'>"+
+    "<path d='M32 2 L62 32 L32 62 L2 32 Z' stroke='#d79b14' stroke-dasharray='2 5'/>"+
+    "<circle cx='32' cy='32' r='13' stroke='#c0392b' stroke-dasharray='2 4'/>"+
+    "<circle cx='32' cy='32' r='6.5' stroke='#2e9e54' stroke-dasharray='2 3'/></g>"+
+    "<g fill='#d79b14'><circle cx='32' cy='32' r='2.6'/></g>"+
+    "<g fill='#c0392b'><circle cx='2' cy='2' r='2'/><circle cx='62' cy='2' r='2'/><circle cx='2' cy='62' r='2'/><circle cx='62' cy='62' r='2'/></g>"+
+    "<g fill='#2e9e54'><circle cx='32' cy='2' r='1.6'/><circle cx='32' cy='62' r='1.6'/><circle cx='2' cy='32' r='1.6'/><circle cx='62' cy='32' r='1.6'/></g></svg>";
+  var paisleyTile =
+    "<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'>"+
+    "<rect width='140' height='140' fill='#5a2a0f'/>"+
+    "<g fill='none' stroke='#d6873f' stroke-width='2.4' stroke-linecap='round'>"+
+    "<path d='M34 18 C12 24 8 56 28 70 C46 82 70 66 60 46 C54 34 38 34 36 48 C35 56 42 60 48 56'/>"+
+    "<path d='M104 30 C84 36 80 64 98 76 C116 86 134 72 126 54 C121 44 108 44 106 56'/>"+
+    "<path d='M30 92 C14 100 14 126 34 132 C54 136 68 120 58 104 C52 96 40 96 38 106'/>"+
+    "<path d='M98 96 C80 102 78 128 96 134 C112 138 128 124 120 108'/>"+
+    "<circle cx='70' cy='70' r='13' stroke-dasharray='2 3.5'/>"+
+    "<circle cx='70' cy='70' r='6' stroke-dasharray='2 3'/></g>"+
+    "<g fill='#e3a964'>"+
+    "<circle cx='70' cy='70' r='3'/><circle cx='46' cy='56' r='2'/><circle cx='106' cy='56' r='2'/>"+
+    "<circle cx='48' cy='104' r='2'/><circle cx='110' cy='108' r='2'/><circle cx='20' cy='40' r='1.6'/>"+
+    "<circle cx='124' cy='88' r='1.6'/><circle cx='88' cy='20' r='1.6'/><circle cx='26' cy='118' r='1.6'/></g></svg>";
+  try{ root.style.setProperty('--pat', uri(boxTile)); root.style.setProperty('--ptext', uri(paisleyTile)); root.classList.add('patok'); }catch(e){}
+  var bgp=document.getElementById('bgp'); if(bgp) bgp.style.backgroundImage=uri(pageTile);
+
+  /* ---- tornado swirl (light-friendly) ---- */
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cv=document.getElementById('vortex');
+  if(cv&&cv.getContext){
+    var ctx=cv.getContext('2d'), W,H,DPR=Math.min(2,devicePixelRatio||1), parts, embers, cx,cy, raf;
+    var pal=[[79,157,255],[215,155,20],[192,57,43],[46,158,84],[116,210,255]];
+    function newEmber(rand){ return {x:Math.random()*W, y:rand?Math.random()*H:H+12, vy:-(0.3+Math.random()*0.8), vx:(Math.random()-0.5)*0.4, r:0.8+Math.random()*2.2, ph:Math.random()*6.28}; }
+    function init(){ W=innerWidth; H=innerHeight; cv.width=W*DPR; cv.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+      cx=W*0.52; cy=H*0.4; var n=Math.round(Math.min(240,W*H/6200)); parts=[];
+      for(var i=0;i<n;i++){ var r=Math.pow(Math.random(),.6)*Math.max(W,H)*0.8;
+        parts.push({a:Math.random()*6.283,r:r,sp:(0.0015+Math.random()*0.004),w:0.8+Math.random()*2.6,c:pal[(Math.random()*pal.length)|0],al:0.18+Math.random()*0.42}); }
+      var m=Math.round(Math.min(80,W*H/20000)); embers=[];
+      for(var j=0;j<m;j++){ embers.push(newEmber(true)); } }
+    function frame(){ ctx.clearRect(0,0,W,H);
+      for(var i=0;i<parts.length;i++){ var p=parts[i]; p.a+=p.sp; var sw=p.a+p.r*0.01;
+        var x=cx+Math.cos(sw)*p.r, y=cy+Math.sin(sw)*p.r*0.78, x2=cx+Math.cos(sw+0.17)*p.r, y2=cy+Math.sin(sw+0.17)*p.r*0.78;
+        ctx.strokeStyle='rgba('+p.c[0]+','+p.c[1]+','+p.c[2]+','+p.al+')'; ctx.lineWidth=p.w; ctx.lineCap='round';
+        ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x2,y2); ctx.stroke(); }
+      ctx.shadowColor='rgba(255,120,20,0.9)';
+      for(var k=0;k<embers.length;k++){ var e=embers[k]; e.y+=e.vy; e.x+=e.vx; e.ph+=0.09;
+        if(e.y<-12){ embers[k]=newEmber(false); continue; }
+        var fl=0.5+0.5*Math.sin(e.ph);
+        ctx.shadowBlur=9; ctx.fillStyle='rgba(255,'+(110+Math.floor(90*fl))+',28,'+(0.45+0.45*fl)+')';
+        ctx.beginPath(); ctx.arc(e.x,e.y,e.r,0,6.283); ctx.fill(); }
+      ctx.shadowBlur=0;
+      raf=requestAnimationFrame(frame); }
+    init(); if(reduce){ frame(); cancelAnimationFrame(raf); } else frame();
+    var rt; addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(init,220); });
+  }
+})();
+</script>
 </body>
 </html>
