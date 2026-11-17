@@ -170,6 +170,14 @@ footer span{color:var(--red)}
 .modal-box pre{background:#14161e;color:#9be7b5;border-radius:10px;padding:13px;overflow-x:auto;font:.8rem/1.6 var(--m);margin:8px 0}
 .modal-box code{font-family:var(--m);background:var(--bg);padding:1px 5px;border-radius:4px;font-size:.86em}
 .modal-box .src{font:.78rem var(--m);color:var(--green-d)}
+.modal-box.cvmode{max-width:900px;padding:22px;border-top-color:var(--green)}
+.cv-view img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px -15px rgba(20,22,30,.35);margin-top:14px}
+.cv-view .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-right:44px}
+.cv-view .bar h2{margin:0;flex:1}
+.mbtn{font:700 .85rem var(--d);padding:10px 16px;border-radius:10px;display:inline-flex;gap:6px;align-items:center}
+.mbtn.r{background:var(--red);color:#fff}.mbtn.g{background:var(--green);color:#fff}
+.cv-view small{display:block;text-align:center;font:.72rem var(--m);color:var(--faint);margin-top:8px}
+@media(max-width:600px){.cv-view .bar h2{font-size:1.25rem;flex-basis:100%}.modal-box.cvmode{padding:16px}}
 
 /* toast */
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--ink);color:#fff;font:.85rem var(--m);padding:10px 18px;border-radius:10px;opacity:0;transition:.3s;z-index:120;pointer-events:none}
@@ -257,7 +265,7 @@ footer span{color:var(--red)}
     <div class="btns">
       <a class="btn btn-red" id="ghBtn" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
       <a class="btn btn-green" href="#projects">View Projects →</a>
-      <button class="btn btn-line" data-cv>Download CV</button>
+      <button class="btn btn-line" data-viewcv>👁 View CV</button>
     </div>
   </div>
   <div class="hero-side">
@@ -320,19 +328,21 @@ footer span{color:var(--red)}
   <div class="sec-head"><span class="num">05</span><h2>CV / Resume</h2><span class="ln"></span></div>
   <div class="grid2 alt reveal">
     <div class="box">
-      <h3>🎓 Education</h3>
-      <div class="cv-item"><b>B.Tech — CSE (Cyber Security)</b><small>JECRC University, Jaipur · 2026 – present</small><p>First year. Core CS alongside a dedicated cyber security track.</p></div>
-      <h3 style="margin-top:18px">🏆 Achievements</h3>
-      <div class="cv-item"><b>Machines rooted</b><p>Basic Pentesting 1, Healthcare, Mr Robot, Metasploitable 2 &amp; 3</p></div>
-      <div class="cv-item"><b>OverTheWire Natas 0 → 11</b><p>Server-side web security wargame, fully documented</p></div>
+      <h3>🎯 Career Objective</h3>
+      <div class="cv-item"><p>Cyber Security undergraduate with hands-on experience in web application security, OSINT and bug bounty hunting — building offensive-security skills through CTFs, real-world vulnerability research and independent tool development. Looking for a security-focused internship or entry-level role.</p></div>
+      <h3 style="margin-top:16px">🎓 Education</h3>
+      <div class="cv-item"><b>B.Tech — CSE (Cyber Security)</b><small>JECRC University, Jaipur · 2026 – ongoing</small><p>Coursework &amp; self-study: Web Security, API Security, OSINT, Reverse Engineering, OS Internals (Linux &amp; Windows), Cloud Security, Malware &amp; Threat Analysis.</p></div>
     </div>
     <div class="box green">
-      <h3>🛡️ Experience</h3>
-      <div class="cv-item"><b>Independent Bug Bounty Hunter</b><small>Bugcrowd · Intigriti · VDPs · 2026 – present</small><p>Recon and manual testing on authorized public programs — subdomain enumeration, endpoint mining, IDOR / XSS / access-control testing. First valid report submitted (P4).</p></div>
-      <div class="cv-item"><b>Security Tool Development</b><small>Personal projects</small><p>OSINT subdomain aggregator, MAC changer and a Kali Linux chatbot — built in Python.</p></div>
+      <h3>🛡️ Security Practice &amp; Achievements</h3>
+      <div class="cv-item"><b>Flipkart Public Bug Bounty Program</b><p>Testing for IDOR, API tampering, business logic and checkout/coupon flaws.</p></div>
+      <div class="cv-item"><b>PortSwigger Web Security Academy</b><p>Labs on SQL Injection, Authentication, IDOR, Business Logic and Access Control.</p></div>
+      <div class="cv-item"><b>picoCTF &amp; CTF machines</b><p>Structured CTF path; rooted Basic Pentesting 1, Healthcare, Mr Robot, Metasploitable 2 &amp; 3.</p></div>
+      <div class="cv-item"><b>Daily practice</b><p>Daily routine of security labs and bug hunting.</p></div>
       <div class="cv-btns">
-        <button class="send" data-cv>⬇ Download CV</button>
-        <a class="send alt2" href="#contact">Hire / Contact</a>
+        <button class="send" data-viewcv>👁 View CV</button>
+        <a class="send" href="resume.pdf" download="Pradeep-Resume.pdf">⬇ Download CV</a>
+        <a class="send alt2" href="#contact">Contact</a>
       </div>
     </div>
   </div>
@@ -410,10 +420,10 @@ const GH = repo => repo ? `${GH_PROFILE}/${repo}` : `${GH_PROFILE}?tab=repositor
 
 /* ---------- DATA ---------- */
 const SKILLS = [
-  {t:"Languages", s:["Python","JavaScript","Bash","SQL"]},
+  {t:"Languages", s:["Python","JavaScript"]},
   {t:"Web Development", s:["React","Node.js / Express","PostgreSQL","JWT + bcrypt","HTML / CSS"]},
-  {t:"Security Tooling", s:["Burp Suite","Caido","nmap","gobuster","Metasploit","John","sqlmap","exiftool","binwalk"]},
-  {t:"Recon", s:["subfinder","httpx","katana","gau","LinkFinder","crt.sh","Wayback CDX"]},
+  {t:"Security Tooling", s:["Burp Suite","Caido","PortSwigger Labs","Tor Browser","ARP scanning","nmap","gobuster","Metasploit","John","sqlmap","exiftool","binwalk"]},
+  {t:"Recon", s:["LinkFinder","JSFinder","SecretFinder","crt.sh","HackerTarget","OTX","RapidDNS","Wayback CDX","subfinder","httpx"]},
   {t:"Vulnerability Classes", s:["IDOR","XSS","SQLi","Access control","Business logic","API tampering"]},
   {t:"Platforms", s:["Kali Linux","Git / GitHub","PortSwigger","TryHackMe","HackTheBox","VulnHub"]}
 ];
@@ -422,8 +432,8 @@ const PROJECTS = [
   {n:"PawPal", ico:"🐾", repo:"pawpal", d:"A pet care web app — pet profiles, feeding & walk reminders, vet/vaccination tracker, expense tracker and a disease guide covering all kinds of pets.", tech:["JavaScript","HTML/CSS","Web App"], st:"● Web app"},
   {n:"Kalisub", ico:"🐉", repo:"kalisub", d:"A chatbot that runs inside Kali Linux — helps with commands, tools and pentest workflow straight from the terminal.", tech:["Python","Kali Linux","Chatbot"], st:"● Security tool"},
   {n:"MAC Changer", ico:"⇄", repo:"macchanger", d:"A Python tool to change the MAC address of a network interface on Linux — validates the input, applies the new address and verifies the change.", tech:["Python","Networking","Linux"], st:"● Security tool"},
-  {n:"OSINT Subdomain Tool", ico:">_", repo:"", d:"A Python CLI that aggregates subdomains from crt.sh, HackerTarget, OTX, RapidDNS and the Wayback CDX API — argparse options, per-source error handling and file output.", tech:["Python","OSINT","CLI"], st:"◇ In progress — async, plugin-based rewrite"},
-  {n:"Finance Tracker", ico:"₹", repo:"", d:"Full-stack personal finance app — React frontend, Node.js/Express backend, modules for bank accounts, investments and loans, with multi-user auth (bcryptjs + JWT).", tech:["React","Express","JWT"], st:"● Full-stack · auth · multi-user"}
+  {n:"Multi-Source Subdomain Enumeration Tool", ico:">_", repo:"", d:"A Python CLI that aggregates subdomains from crt.sh, HackerTarget, OTX, RapidDNS and the Wayback CDX API — argparse options, per-source error handling and file output.", tech:["Python","OSINT","CLI"], st:"◇ In progress — async, plugin-based rewrite"},
+  {n:"Where Did My Money Go?", ico:"₹", repo:"", d:"Full-stack personal finance tracker — React frontend, Node.js/Express backend, modules for bank accounts, stock/mutual fund investments and loans given to others, with multi-user auth (bcryptjs + JWT).", tech:["React","Express","JWT"], st:"● Full-stack · auth · multi-user"}
 ];
 
 const WRITEUPS = [
@@ -512,24 +522,24 @@ $('#certGrid').innerHTML = CERTS.map(c => c.na
 /* ---------- WRITEUP MODAL ---------- */
 function openWU(id){
   const w = WRITEUPS.find(x=>x.id===id); if(!w) return;
+  document.querySelector('.modal-box').classList.remove('cvmode');
   $('#mBody').innerHTML = `<span class="src">// ${esc(w.src)} · ${esc(w.diff)}</span><h2>${esc(w.t)}</h2><p><b>TL;DR:</b> ${esc(w.sum)}</p>${w.body}`;
   $('#modal').classList.add('open'); document.body.style.overflow='hidden';
 }
-function closeWU(){ $('#modal').classList.remove('open'); document.body.style.overflow=''; }
+function openCV(){
+  $('#mBody').innerHTML = `<div class="cv-view"><div class="bar"><h2>Pradeep — Resume</h2>
+    <a class="mbtn g" href="resume.pdf" target="_blank" rel="noopener">↗ Open PDF</a>
+    <a class="mbtn r" href="resume.pdf" download="Pradeep-Resume.pdf">⬇ Download</a></div>
+    <a href="resume.jpg" target="_blank" rel="noopener" title="Open full size"><img src="resume.jpg" alt="Pradeep's resume" loading="lazy"></a><small>Tap / click the resume to open it full size</small></div>`;
+  document.querySelector('.modal-box').classList.add('cvmode');
+  $('#modal').classList.add('open'); document.body.style.overflow='hidden';
+}
+document.addEventListener('click', e => { if(e.target.closest('[data-viewcv]')) openCV(); });
+function closeWU(){ document.querySelector('.modal-box').classList.remove('cvmode'); $('#modal').classList.remove('open'); document.body.style.overflow=''; }
 document.addEventListener('click', e => { const b=e.target.closest('[data-wu]'); if(b) openWU(b.dataset.wu); });
 $('#mClose').onclick = closeWU;
 $('#modal').addEventListener('click', e => { if(e.target.id==='modal') closeWU(); });
 document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeWU(); $('#chat').classList.remove('open'); } });
-
-/* ---------- CV BUTTON ---------- */
-document.querySelectorAll('[data-cv]').forEach(b => b.addEventListener('click', async () => {
-  try {
-    const r = await fetch(CONFIG.resume, {method:'HEAD'});
-    if (r.ok) { window.open(CONFIG.resume, '_blank', 'noopener'); return; }
-  } catch(e) {}
-  toast('CV will be uploaded soon — see the CV section below 👇');
-  document.getElementById('cv').scrollIntoView({behavior:'smooth'});
-}));
 
 /* ---------- COPY ---------- */
 document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', () => {
@@ -621,7 +631,7 @@ const KB = {
   projects: () => `Pradeep's projects:\n` + PROJECTS.map(p=>`• ${p.ico} [${p.n}](${GH(p.repo)})`).join('\n') + `\nAsk about any one for details!`,
   writeups: () => `Writeups:\n` + WRITEUPS.map(w=>`• [${w.t}](#wu-${w.id}) — ${w.src}`).join('\n') + `\nAlso rooted: Mr Robot, Metasploitable 2 & 3.`,
   bounty: () => `Pradeep hunts on authorized programs (**Bugcrowd, Intigriti, VDPs**). Pipeline: subfinder → httpx → katana / gau → LinkFinder → Burp/Caido. Focus: IDOR, XSS, access control, SQLi, business logic. First valid report submitted (P4).`,
-  cv: () => `**Education:** B.Tech CSE (Cyber Security), JECRC University — 2026–present.\n**Experience:** Independent bug bounty hunter + security tool developer.\n[Open CV section](#cv)`,
+  cv: () => `**Education:** B.Tech CSE (Cyber Security), JECRC University, Jaipur — 2026–ongoing.\n**Practice:** Flipkart public bug bounty, PortSwigger Academy labs, picoCTF, CTF machines.\n[View CV](#view-cv) · [Download CV](resume.pdf)`,
   certs: () => `**Earned certificates:** N/A (none yet)\n**In preparation:** CEH Practical (EC-Council)\n**Planned:** OSCP (2027) [Certificates](#certs)`,
   contact: () => `📧 **${CONFIG.email}**\n📱 ${CONFIG.phone}\n🐙 [GitHub](${GH_PROFILE})\nOr use the [Send Email form](#contact).`,
   hire: () => `He's hands-on: real bug bounty recon on live programs, ${WRITEUPS.length} detailed writeups + more machines rooted, and ${PROJECTS.length} projects across security tools and full-stack web. Looking for a security internship. ${KB.contact()}`,
@@ -653,7 +663,7 @@ function localAnswer(q){
 }
 function md(t){
   return esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
-    .replace(/\[([^\]]+)\]\(((?:https?:\/\/|#)[^)\s]+)\)/g,(m,a,u)=>`<a href="${u}" ${u[0]==='#'?'data-in':'target="_blank" rel="noopener"'}>${a}</a>`);
+    .replace(/\[([^\]]+)\]\(((?:https?:\/\/|#|resume\.pdf)[^)\s]*)\)/g,(m,a,u)=>`<a href="${u}" ${u[0]==='#'?'data-in':'target="_blank" rel="noopener"'}>${a}</a>`);
 }
 (function(){
   const box=$('#msgs'), input=$('#askIn'), btn=$('#askBtn'), hist=[]; let ai=null;
@@ -662,7 +672,7 @@ function md(t){
   $('#qs').addEventListener('click', e=>{ if(e.target.tagName==='BUTTON') ask(e.target.textContent); });
   function add(cls,html){ const d=document.createElement('div'); d.className='m '+cls; d.innerHTML=html; box.appendChild(d); box.scrollTop=box.scrollHeight; return d; }
   box.addEventListener('click', e=>{ const a=e.target.closest('a[data-in]'); if(!a) return; e.preventDefault();
-    const h=a.getAttribute('href'); if(h.startsWith('#wu-')){ openWU(h.slice(4)); return; }
+    const h=a.getAttribute('href'); if(h.startsWith('#wu-')){ openWU(h.slice(4)); return; } if(h==='#view-cv'){ openCV(); return; }
     document.querySelector(h)?.scrollIntoView({behavior:'smooth'}); if(innerWidth<600) $('#chat').classList.remove('open'); });
   async function type(el,txt){ let acc=''; for(const w of txt.split(/(\s+)/)){ acc+=w; el.innerHTML=md(acc); box.scrollTop=box.scrollHeight; await new Promise(r=>setTimeout(r,12)); } }
   async function ask(q){

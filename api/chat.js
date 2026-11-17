@@ -19,8 +19,12 @@ FACTS
 - Portfolio sections: #about #skills #projects #writeups #cv #certs #contact (contact has a Send Email form).
 - MAIN PROJECTS ON THE SITE (with GitHub): PawPal (pet care web app, repo pawpal), Kalisub (chatbot inside Kali Linux,
   repo kalisub), MAC Changer (Python tool to change a network interface's MAC address, repo macchanger),
-  OSINT Subdomain Tool (Python CLI aggregating crt.sh, HackerTarget, OTX, RapidDNS, Wayback), Finance Tracker
-  (React + Express + JWT/bcrypt multi-user finance app).
+  Multi-Source Subdomain Enumeration Tool (Python CLI aggregating crt.sh, HackerTarget, OTX, RapidDNS, Wayback CDX;
+  being reworked into an async plugin-based CLI), "Where Did My Money Go?" (React + Express finance tracker with bank
+  accounts, investments, loans, multi-user bcrypt + JWT auth).
+- Security practice: Flipkart public bug bounty program (IDOR, API tampering, business logic, checkout/coupon flaws),
+  PortSwigger Web Security Academy labs, picoCTF, daily labs + bug hunting routine.
+- CV/resume PDF: downloadable at resume.pdf on the site (link it as [Download CV](resume.pdf)).
 - Focus: cybersecurity (bug bounty, CTFs, pentesting) + full-stack web development.
 - Dev stack: JavaScript, HTML/CSS, Node.js, Express, PostgreSQL, Python (learning for security scripting), Git, Render/Vercel.
 - Security tools: subfinder, amass, dnsx, httpx, naabu, katana, gau, waybackurls, LinkFinder, Burp Suite, nmap, gobuster,
